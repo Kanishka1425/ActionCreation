@@ -1,0 +1,31 @@
+name: ActionCreation
+
+on: 
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+        Sample_Test:
+            description: "PROVIDE_VALUE"
+            required: true
+            default: "MORNING"
+            type: choice
+            options:
+                - MORNING
+                - NOON
+                - EVENING
+        Sample_Test2:
+            description: "IS_DEPLOYSTAGE_REQUIRED"
+            required: true
+            default: true
+            type: boolean
+            
+            jobs:
+                Gated_Build:
+                 if: github.event == 'pull_request'
+                 uses: Kanishka1425/Final-Practice-/.github/workflows/demo1.yml
+                 with:
+                 Sample_Test: ${{ inputs.Sample_Test }}
+                 Sample_Test2: ${{ inputs.Sample_Test2 }}
